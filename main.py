@@ -227,46 +227,6 @@ def drawing_ans_to_image(ans_name, image, alpha=0.5):
     return image
 
 
-def ComparePoint(a, b):
-    if a[0] < b[0] or a[1] < b[1]:
-        return True
-    return False
-
-
-def calculate_contour(points):
-    hull = 0
-    for i in range(1, len(points)):
-        if ComparePoint(points[i], points[hull]):
-            hull = i
-
-    def is_left(a, b, c):
-        u1 = b[0] - a[0]
-        v1 = b[1] - a[1]
-        u2 = c[0] - a[0]
-        v2 = c[1] - a[1]
-        return u1 * v2 - v1 * u2 < 0
-
-    out_indices = [0 for _ in range(len(points))]
-    end_point = -1
-    i = 0
-
-    while end_point != out_indices[0]:
-        out_indices[i] = hull
-        i = i + 1
-        end_point = 0
-        for j in range(1, len(points)):
-            if hull == end_point or is_left(points[hull], points[end_point], points[j]):
-                end_point = j
-
-        hull = end_point
-
-    contour = []
-    for j in range(i):
-        contour.append(points[out_indices[j]])
-
-    return np.array(contour)
-
-
 def main():
     data = 'val'
     all_names = []
