@@ -64,7 +64,6 @@ class Validation:
                 if points['shape_type'] == 'polygon':
                     mask = np.zeros(self.image.shape)
 
-                    polygon = np.array(points['points'], dtype=np.int32)
                     # if (int(outsize_h) != 0 or int(outsize_w) != 0):
                     #     for i in range(len(polygon)):
                     #         polygon[i][0] -= outsize_w
@@ -88,8 +87,6 @@ class Validation:
         image_number = 0
 
         for box in self.polygon_list:
-            class_image = np.zeros(self.image.shape)
-            content_point = Polygon(box).convex_hull
             self.polygon_content_list.append(content_point)
 
     def calculate_coincidence_rate(self):
@@ -117,9 +114,6 @@ class Validation:
                     if has_check_ans[ans_number] != 0:
                         inter_area = self.polygon_ans_content_list[ans_number].intersection(
                             self.polygon_content_list[class_number]).area
-                        new_inter_area = round(inter_area / self.polygon_ans_content_list[ans_number].area * 100, 2)
-
-                        old_inter_area = coincidence_rate_center['area']
                         if new_inter_area > old_inter_area:
                             coincidence_rate_center['area'] = new_inter_area
                     else:
