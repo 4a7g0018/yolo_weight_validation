@@ -15,19 +15,7 @@ def k_main(boxes_list, format_box_w_h_list,format_confidences_list):
         distortions.append(k_means.inertia_)
         scores.append(silhouette_score(test_blobs_x, k_means.predict(test_blobs_x)))
 
-    selected_K = scores.index(max(scores)) + 2
-    new_class = k_means.cluster_centers_
-    new_item = k_means.labels_
 
-    '''#分類後的中心點
-    print(len(new_class))
-    # 全部點的分類表
-    print(len(new_item))
-    print("=================")'''
-
-    # 將方框中心點與方框寬高 以群集後的編號進行由小到大的排列
-    new_item, boxes_cneter, format_box_w_h_list,format_confidences_list = map(list,
-                                                     zip(*sorted(zip(new_item, test_blobs_x, format_box_w_h_list,format_confidences_list))))
     class_map = {}
     box_center_map = {}
 
